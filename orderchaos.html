@@ -8,8 +8,6 @@
 	<body>
 		<canvas id="myCanvas" width="600" height="600"></canvas>
 		<div id="help">
-			<a target="_blank" href="http://paperjs.org/examples">Paper.js examples &rarr;</a><br />
-			<a target="_blank" href="http://paperjs.org/tutorials">Paper.js tutorials &rarr;</a><br />
 		</div>
 		<script charset="utf-8" src="scripts/paper.js"></script>
 		<script charset="utf-8" src="scripts/skip.js"></script>
@@ -49,23 +47,23 @@ var running = true
 
 
 //set up timer to work with while practicing
-var timeText = new PointText(view.center);
-    timeText.paragraphStyle.justification = 'center';
-    timeText.characterStyle.fontSize = 20;
-    timeText.fillColor = 'gray';
-    timeText.position=view.size/2;
+//var timeText = new PointText(view.center);
+    //timeText.paragraphStyle.justification = 'center';
+    //timeText.characterStyle.fontSize = 20;
+    //timeText.fillColor = 'gray';
+    //timeText.position=view.size/2;
 
-var frameCountText = timeText.clone();
-    frameCountText.position=view.size/1.75;
-    frameCountText.fillColor = 'white';
+//var frameCountText = timeText.clone();
+    //frameCountText.position=view.size/1.75;
+    //frameCountText.fillColor = 'white';
 
 
 //set up the action
 
 var onFrame = function( event ) {
 
-        //timeText.content = Math.round(event.time);
-        //frameCountText.content = Math.round(event.count);
+       // timeText.content = Math.round(event.time);
+       // frameCountText.content = Math.round(event.count);
 	
 //set up the entry of the squares	
 	var dest1 = new Point (50, 40)
@@ -86,20 +84,19 @@ var onFrame = function( event ) {
 	var group2 = new Group ([square7, square8])
 	var group3 = new Group ([square5, square6, square7, square8])
 	
-
-
 	
 	if( event.time > durationSeconds && running === true ){
 		
-		running = false
+		
 		square5.remove()
 		square6.remove()
 		square7.remove()
-		square8.remove()
 		background.remove()
 		document.title = 'Paper finished.'
-		console.log( 'Congratulations!' )
-	}
+		//console.log( 'Congratulations!' )
+		running = false
+		
+	}  else if (running === true) {
 
 	
 	if (event.count <= 50){
@@ -163,7 +160,28 @@ var onFrame = function( event ) {
 	
 	}
 	
-	if (event.time.isBetween(35, durationSeconds)){
+	if (event.time.isBetween(35, 37)){
+		square7.position.y += .5
+	
+	}
+	
+	if (event.time.isBetween(38, 40)) {
+		square7.position.y += (-.5)
+		square8.position.y += (-.5)
+	}
+	
+	if (event.time.isBetween (41, 43)) {
+		square8.position.y += (.5)
+	}
+	
+	if (event.time.isBetween(44, 53)){
+	
+	
+	square7.rotate (Math.sin(event.time)* 2)
+
+	}
+	
+	if (event.time.isBetween(53, durationSeconds)){
 		
 		var vector6 = square6.destination - square6.position
 		var vector7 = square7.destination - square7.position
@@ -175,6 +193,11 @@ var onFrame = function( event ) {
 		square5.position += vector5/30
 		square8.position += vector8/30
 		
+		square5.rotate (2)
+		square6.rotate (-3)
+		square7.rotate (20)
+		square8.rotate (-9)
+		
 			if( vector6.length < 5 && vector7.length < 5 && vector5.length < 5 && vector8.length < 5 ){
 
 				square6.destination = Point.random() * view.size
@@ -185,7 +208,7 @@ var onFrame = function( event ) {
 				}
 
 		}
-			
+	}				
 
 }
 
